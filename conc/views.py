@@ -6,11 +6,13 @@ import time
 
 @view_config(route_name='get_repos', renderer='home.jinja2')
 def home(request):
+    """
+    Checks the request method and renders the template if it's GET
+    If request method is POST it runs the celery task and returns the result as json
+    """
     if request.method == 'POST':
         username = request.json_body['username']
-        #time.sleep(2)
         repos = get_repos.delay(username)
-        #time.sleep(3)
         r_list = repos.get()
         return render_to_response('json', r_list, request=request)
     else:
@@ -19,20 +21,21 @@ def home(request):
 
 @view_config(route_name='get_user_info')
 def user_info(request):
+    """
+    Similar to home view first checks the request and runs the celery task.
+    """
     if request.method == 'POST':
         username = request.json_body['username']
-        #time.sleep(2)
         req = get_user_info.delay(username)
-        #time.sleep(3)
         info = req.get()
         return render_to_response('json', info, request=request)
 
 
-@view_config(route_name='search_users')
-def search(request):
-    if request.method == 'POST':
-        username = request.json_body['username']
-        req = search_users.delay(username)
-        time.sleep(2)
-        results = req.get()
-        return render_to_response('json', results, request=request)
+# @view_config(route_name='search_users')
+# def search(request):
+#     if request.method == 'POST':
+#         username = request.json_body['username']
+#         req = search_users.delay(username)
+#         time.sleep(2)
+#         results = req.get()
+#         return render_to_response('json', results, request=request)

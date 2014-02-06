@@ -3,6 +3,7 @@ from celery.task import task
 import requests
 
 
+# Celery app and configuration.
 app = Celery('tasks')
 app.config_from_object('conc.celeryconfig')
 
@@ -12,7 +13,11 @@ client_secret = 'd8f9d0a084ff950474f3830705e1f269cae249b7'
 
 @task
 def get_repos(username):
-
+    """
+    Simple celery task. Makes a request to GitHub API
+    and retrieves the repository list for the given username.
+    Packs them in a dictionary and returns it.
+    """
     r = requests.get(
         'https://api.github.com/users/'+username+'/repos?client_id='+client_id+'&client_secret='+client_secret
     )
@@ -29,6 +34,9 @@ def get_repos(username):
 
 @task
 def get_user_info(username):
+    """
+    Another simple task to retrieve user information from GitHub.
+    """
     r = requests.get(
         'https://api.github.com/users/'+username+'?client_id='+client_id+'&client_secret='+client_secret
     )
@@ -36,15 +44,3 @@ def get_user_info(username):
     if r.ok:
         info = r.json()
         return info
-
-
-@task
-def search_users(username):
-    r = requests.get(
-        'https://api.github.com/search/users?q='+username+'&sort=ASC'+'?client_id='+client_id+'&client_secret='+client_secret
-    )
-
-    if r.ok:
-        u = r.json()
-        users = u['items']
-        return users
