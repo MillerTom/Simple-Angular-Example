@@ -1,0 +1,52 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+<div class="container" ng-app="GIT" ng-controller="Repos">
+    <div class="row" style="margin-bottom: 30px;">
+        <div class="col-md-offset-4 col-lg-4">
+            <form method="post" name="form">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter github username" ng-change="change()" ng-model="formData.username"/>
+                <br>
+                <button ng-click="submit()" ng-disabled="button != 'Fetch Repos'" class="btn btn-warning col-lg-5">[[button]]</button>
+                <button ng-click="user()" ng-disabled="button2 != 'Fetch User Info'" class="btn btn-info col-lg-5 pull-right">[[button2]]</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-show="message2" class="col-lg-offset-2 col-lg-8">
+            <h3 style="text-align: center"><a href="[[results2.html_url]]">[[results2.login]]</a></h3>
+            <p style="text-align: center"><img src="[[results2.avatar_url]]" style="max-height: 80px;" /></p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Public Repos</th>
+                        <th>Public Gists</th>
+                        <th>Followers</th>
+                        <th>Following</th>
+                        <th>Hireable</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a href="#" class="label label-info">[[results2.public_repos]]</a></td>
+                        <td><a href="#" class="label label-info">[[results2.public_gists]]</a></td>
+                        <td><a href="#" class="label label-info">[[results2.followers]]</a></td>
+                        <td><a href="#" class="label label-info">[[results2.following]]</a></td>
+                        <td ng-if="results2.hireable == true">Yes</td>
+                        <td ng-if="results2.hireable != true">No</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-show="message" class="col-lg-offset-4 col-lg-4" style="text-align: center;">
+            <h3>[[message]]</h3>
+            <a ng-repeat="(name, url) in results" href="[[url]]" class="label label-warning" style="margin: 4px; float: left">[[name]] </a>
+        </div>
+    </div>
+<hr>
+</div>
+{% endblock %}
