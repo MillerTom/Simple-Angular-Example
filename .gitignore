@@ -1,0 +1,7 @@
+.idea/
+.DS_Store
+*.pyc
+ConC.egg-info/
+*.rdb
+.coverage
+production.ini
