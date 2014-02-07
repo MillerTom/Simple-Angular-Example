@@ -1,8 +1,6 @@
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
-from pyramid.response import Response
 from .tasks import get_repos, get_user_info
-import time
 
 
 @view_config(route_name='get_repos', renderer='home.jinja2')
@@ -23,7 +21,7 @@ def home(request):
 @view_config(route_name='get_user_info', renderer='json')
 def user_info(request):
     """
-    Similar to home view first checks the request and runs the celery task.
+    Similar to home view, first checks the request and runs the celery task.
     """
     if request.method == 'POST':
         username = request.json_body['username']

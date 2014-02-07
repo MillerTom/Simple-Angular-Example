@@ -31,7 +31,6 @@ describe('Angular Test', function(){
 
     it('should fetch user info.', function() {
       var controller = createController();
-      //$httpBackend.flush();
 
       $rootScope.formData = {'username': 'millertom'};
       $httpBackend.expectPOST('http://localhost:6543/user', $rootScope.formData).respond(200, {});
