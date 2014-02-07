@@ -11,6 +11,7 @@ app.config_from_object('conc.celeryconfig')
 client_id = 'b2c60ec1b36121a410a2'
 client_secret = 'd8f9d0a084ff950474f3830705e1f269cae249b7'
 
+
 @task
 def get_repos(username):
     """
