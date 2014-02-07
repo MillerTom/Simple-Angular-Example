@@ -15,7 +15,7 @@ app.controller('Repos', function($scope, $http){
     $scope.button = "Fetching..";
     $scope.message = '';
     $scope.results = [];
-    $http.post('/', this.formData).success(function(response){
+    $http.post('http://localhost:6543/', this.formData).success(function(response){
       if (response.length === 0){
         $scope.message = 'Failed';
       } else {
@@ -33,7 +33,7 @@ app.controller('Repos', function($scope, $http){
     $scope.button2 = "Fetching..";
     $scope.message2 = '';
     $scope.results2 = [];
-    $http.post('/user', this.formData).success(function(response){
+    $http.post('http://localhost:6543/user', this.formData).success(function(response){
       if (response.length === 0){
         $scope.message2 = 'Failed';
       } else {

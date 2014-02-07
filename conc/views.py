@@ -1,6 +1,7 @@
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
-from .tasks import get_repos, get_user_info, search_users
+from pyramid.response import Response
+from .tasks import get_repos, get_user_info
 import time
 
 
@@ -19,7 +20,7 @@ def home(request):
         return {'project': 'Celery on CentOS'}
 
 
-@view_config(route_name='get_user_info')
+@view_config(route_name='get_user_info', renderer='json')
 def user_info(request):
     """
     Similar to home view first checks the request and runs the celery task.
@@ -28,14 +29,4 @@ def user_info(request):
         username = request.json_body['username']
         req = get_user_info.delay(username)
         info = req.get()
-        return render_to_response('json', info, request=request)
-
-
-# @view_config(route_name='search_users')
-# def search(request):
-#     if request.method == 'POST':
-#         username = request.json_body['username']
-#         req = search_users.delay(username)
-#         time.sleep(2)
-#         results = req.get()
-#         return render_to_response('json', results, request=request)
+        return info
