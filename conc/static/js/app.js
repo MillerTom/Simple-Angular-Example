@@ -58,8 +58,8 @@ app.controller('Repos', function($scope, $http){
   };
   $scope.change = function(){
     setTimeout(function(){
-      //$scope.user();
-      //$scope.submit();
+      $scope.user();
+      $scope.submit();
     }, 1500);
 
   };
