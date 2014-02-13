@@ -1,0 +1,22 @@
+{% extends 'base.jinja2' %}
+{% block content %}
+    <div class="container" ng-app="GIT" ng-controller="User" ng-init="login()">
+        <div class="row">
+            <div class="col-lg-4">
+                <span ng-show="message">[[message]] </span><span ng-show="user_info"> [[ user_info.login ]]!</span>
+                <hr>
+                <img ng-show="user_info" src="[[user_info.avatar_url]]" class="thumbnail" style="max-height: 80px;">
+                <p ng-repeat="mail in user_info.mails">[[mail]]</p>
+                <br>
+                <h4 ng-show="user_info.notifs">Notifications</h4>
+                <p ng-repeat="n in user_info.notifs" class="alert alert-info" style="padding: 3px 5px;">[[n.subject.title]]</p>
+                <br>
+                <a ng-show="user_info" class="btn btn-danger" href="/logout">Logout</a>
+            </div>
+            <div ng-show="user_info.starred" class="col-lg-4">
+                <h4>Starred Repos</h4>
+                <a ng-repeat="s in user_info.starred" href="[[s.html_url]]" class="btn btn-info btn-sm" style="margin: 3px">[[s.name]]</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

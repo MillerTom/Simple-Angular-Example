@@ -4,7 +4,17 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol(']]');
 });
 
-
+app.controller('User', function($scope, $http){
+  $scope.login = function() {
+    $scope.message = 'Loading please wait..';
+    $http.post('/profile').success(function(response){
+      $scope.message = 'Welcome back';
+      $scope.user_info = response;
+    }).error(function(err){
+        $scope.user_info = err;
+      })
+  }
+});
 
 app.controller('Repos', function($scope, $http){
   $scope.button = 'Fetch Repos';
@@ -15,7 +25,7 @@ app.controller('Repos', function($scope, $http){
     $scope.button = "Fetching..";
     $scope.message = '';
     $scope.results = [];
-    $http.post('/', this.formData).success(function(response){
+    $http.post('/repos', this.formData).success(function(response){
       if (response.length === 0){
         $scope.message = 'Failed';
       } else {
@@ -48,8 +58,8 @@ app.controller('Repos', function($scope, $http){
   };
   $scope.change = function(){
     setTimeout(function(){
-      $scope.user();
-      $scope.submit();
+      //$scope.user();
+      //$scope.submit();
     }, 1500);
 
   };

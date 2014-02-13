@@ -19,15 +19,6 @@ class ViewTests(unittest.TestCase):
         info = home(request)
         self.assertEqual(info['project'], 'Celery on CentOS')
 
-    def test_home_post(self):
-        request = testing.DummyRequest()
-        request.method = 'POST'
-        request.json_body = {'username': 'millertom'}
-        repos = home(request)
-        repos = json.loads(repos.body)
-        self.assertEqual(type(repos), type({}))
-        self.assertEqual(len(repos), 3)
-
     def test_user_info(self):
         request = testing.DummyRequest()
         request.method = 'POST'
