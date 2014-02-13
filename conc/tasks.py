@@ -2,15 +2,18 @@ from celery import Celery
 from celery.task import task
 import requests
 import json
+import ConfigParser
 
+config = ConfigParser.ConfigParser()
+config.read('production.ini')
 
 # Celery app and configuration.
 app = Celery('tasks')
 app.config_from_object('conc.celeryconfig')
 
 # Github API Credentials
-client_id = 'b2c60ec1b36121a410a2'
-client_secret = 'd8f9d0a084ff950474f3830705e1f269cae249b7'
+client_id = config.get('github', 'client_id')
+client_secret = config.get('github', 'client_secret')
 
 
 @task
